@@ -20,9 +20,9 @@ function ToastItem({ t }: { t: Toast }) {
   useIsoLayoutEffect(() => {
     gsap.from(el.current, { y: 40, scale: 0.9, opacity: 0, duration: 0.6, ease: "back.out(2)" });
   }, []);
-  const tone = t.tone === "err" ? "bg-fizz text-white" : t.tone === "info" ? "bg-lemon text-ink" : "bg-ink text-cream";
+  const tone = t.tone === "err" ? "bg-leaf text-white" : t.tone === "info" ? "bg-gold text-ink" : "bg-ink text-cream";
   return (
-    <div ref={el} role="status" className={`pointer-events-auto flex items-center gap-4 rounded-full border-2 border-ink px-5 py-3 text-sm font-bold shadow-[4px_4px_0_var(--ink)] ${tone}`}>
+    <div ref={el} role="status" className={`pointer-events-auto flex items-center gap-4 rounded-full border border-ink/15 px-5 py-3 text-sm font-bold shadow-[0_30px_60px_-30px_rgba(18,51,33,.6)] ${tone}`}>
       <span>{t.text}</span>
       {t.href && <Link href={t.href} onClick={() => dismiss(t.id)} className="underline underline-offset-2">{t.cta ?? "View"}</Link>}
     </div>

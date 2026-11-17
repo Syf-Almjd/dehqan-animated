@@ -9,7 +9,7 @@ export default async function AdminCoupons() {
   const coupons = (data as Coupon[]) ?? [];
   return (
     <>
-      <h1 className="font-display text-5xl font-extrabold">Coupons</h1>
+      <h1 className="font-display text-5xl font-bold">Coupons</h1>
       <form action={saveCoupon} className="card mt-6 grid gap-4 p-6 sm:grid-cols-5 sm:items-end">
         <div><label className="label" htmlFor="code">Code</label><input id="code" name="code" required className="input uppercase" placeholder="SUMMER20" /></div>
         <div><label className="label" htmlFor="percent_off">% off</label><input id="percent_off" name="percent_off" type="number" min={1} max={100} className="input" /></div>
@@ -20,7 +20,7 @@ export default async function AdminCoupons() {
       </form>
       <div className="card mt-6 overflow-x-auto">
         <table className="w-full text-left text-sm">
-          <thead className="border-b-2 border-ink text-xs uppercase tracking-wider"><tr><th className="p-4">Code</th><th>Discount</th><th>Min spend</th><th>Expires</th><th>Status</th><th /></tr></thead>
+          <thead className="border-b border-ink/10 text-xs uppercase tracking-wider"><tr><th className="p-4">Code</th><th>Discount</th><th>Min spend</th><th>Expires</th><th>Status</th><th /></tr></thead>
           <tbody className="divide-y divide-ink/10">
             {coupons.length === 0 && <tr><td colSpan={6} className="p-6 text-center opacity-60">No coupons yet.</td></tr>}
             {coupons.map((c) => (
@@ -34,7 +34,7 @@ export default async function AdminCoupons() {
                     <button className={`rounded-full px-3 py-1 text-xs font-bold ${c.active ? "bg-mint text-white" : "bg-ink/10"}`}>{c.active ? "Active" : "Paused"}</button>
                   </form>
                 </td>
-                <td className="p-4 text-right"><form action={deleteCoupon}><input type="hidden" name="code" value={c.code} /><button className="font-bold text-fizz underline">Delete</button></form></td>
+                <td className="p-4 text-right"><form action={deleteCoupon}><input type="hidden" name="code" value={c.code} /><button className="font-bold text-leaf underline">Delete</button></form></td>
               </tr>
             ))}
           </tbody>

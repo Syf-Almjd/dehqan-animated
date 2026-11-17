@@ -23,7 +23,7 @@ export default function ReviewForm({ productId, slug }: { productId: string; slu
       </div>
       <input name="title" placeholder="Sum it up (optional)" className="input" maxLength={80} />
       <textarea name="body" required minLength={3} rows={3} placeholder="What did you think?" className="input" />
-      {state?.error && <p role="alert" className="text-sm font-bold text-fizz">{state.error}</p>}
+      {state?.error && <p role="alert" className="text-sm font-bold text-leaf">{state.error}</p>}
       <button disabled={pending} className="btn btn-dark">{pending ? "Posting…" : "Post review"}</button>
     </form>
   );

@@ -16,7 +16,7 @@ export const useWishlist = create<WishState>()(
       },
       remove: (id) => set({ items: get().items.filter((i) => i.id !== id) }),
     }),
-    { name: "fizzo-wishlist" },
+    { name: "dehqan-wishlist" },
   ),
 );
 
@@ -27,6 +27,6 @@ export const useRecent = create<RecentState>()(
       items: [],
       push: (p) => set({ items: [toCard(p), ...get().items.filter((i) => i.id !== p.id)].slice(0, 9) }),
     }),
-    { name: "fizzo-recent" },
+    { name: "dehqan-recent" },
   ),
 );

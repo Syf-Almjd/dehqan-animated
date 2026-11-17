@@ -14,7 +14,7 @@ export async function subscribe(_: ActionState, fd: FormData): Promise<ActionSta
     const { error } = await supabase.from("newsletter_subscribers").insert({ email });
     if (error && error.code !== "23505") return { error: "Couldn't sign you up – try again?" };
   }
-  return { ok: true, message: "You're in! Check your inbox for 10% off 🎉" };
+  return { ok: true, message: "Thank you – you're on the list." };
 }
 
 export async function addReview(_: ActionState, fd: FormData): Promise<ActionState> {
@@ -46,4 +46,17 @@ export async function updateProfile(_: ActionState, fd: FormData): Promise<Actio
   if (error) return { error: error.message };
   revalidatePath("/", "layout");
   return { ok: true, message: "Saved." };
+}
+
+export async function sendInquiry(_: ActionState, fd: FormData): Promise<ActionState> {
+  const g = (k: string) => String(fd.get(k) ?? "").trim().slice(0, 2000);
+  const row = { name: g("name"), company: g("company") || null, email: g("email").toLowerCase(), phone: g("phone") || null,
+    country: g("country") || null, products: g("products") || null, quantity: g("quantity") || null, message: g("message") || null };
+  if (!row.name) return { error: "Please tell us your name." };
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(row.email)) return { error: "That email doesn't look right." };
+  if (!isSupabaseConfigured) return { error: "Online enquiries need Supabase connected – please email or WhatsApp us for now." };
+  const supabase = await createClient();
+  const { error } = await supabase.from("inquiries").insert(row);
+  if (error) return { error: "Couldn't send your enquiry – please email or WhatsApp us instead." };
+  return { ok: true, message: "Thank you! We'll reply with samples and a quote shortly." };
 }

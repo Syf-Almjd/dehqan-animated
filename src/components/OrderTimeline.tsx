@@ -23,7 +23,7 @@ export default function OrderTimeline({ status }: { status: OrderStatus }) {
     return () => ctx.revert();
   }, [idx]);
 
-  if (status === "cancelled") return <p className="card bg-fizz/10 p-5 font-bold text-fizz">This order was cancelled.</p>;
+  if (status === "cancelled") return <p className="card bg-leaf/10 p-5 font-bold text-leaf">This order was cancelled.</p>;
   return (
     <div ref={root} className="card p-6">
       <div className="relative mx-6">
@@ -32,7 +32,7 @@ export default function OrderTimeline({ status }: { status: OrderStatus }) {
         <ol className="relative flex justify-between">
           {STEPS.map((s, i) => (
             <li key={s.id} className="flex w-0 flex-col items-center">
-              <span data-step className={`grid h-12 w-12 shrink-0 place-items-center rounded-full border-2 border-ink text-lg ${i <= idx ? "bg-mint text-white" : "bg-white"}`}>
+              <span data-step className={`grid h-12 w-12 shrink-0 place-items-center rounded-full border border-ink/15 text-lg ${i <= idx ? "bg-mint text-white" : "bg-white"}`}>
                 {i < idx ? <CheckIcon className="h-5 w-5" /> : s.icon}
               </span>
               <span className={`mt-2 whitespace-nowrap text-center text-xs font-bold ${i <= idx ? "" : "opacity-40"}`}>{s.label}</span>

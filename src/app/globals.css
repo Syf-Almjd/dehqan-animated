@@ -1,62 +1,80 @@
 @import "tailwindcss";
 
+/* Dehqan Farms – palette taken from the export catalogue: forest green, harvest gold, parchment cream. */
 :root {
-  --cream: #fbf3e4;
-  --ink: #14110f;
-  --fizz: #ff4a1c;
-  --lemon: #ffd23f;
-  --mint: #2bb673;
-  --sky: #2d7dff;
-  --grape: #6c5ce7;
-  --line: rgba(20, 17, 15, 0.14);
+  --cream: #f8f3e7;
+  --parchment: #f1e8d4;
+  --ink: #16241b;
+  --leaf: #1f5a3c;     /* primary green */
+  --forest: #123321;   /* deep green (cover) */
+  --gold: #c99a2e;     /* harvest gold */
+  --mint: #3f9a62;
+  --sky: #3a6ea5;
+  --grape: #7a4b8c;
+  --saffron: #b3261e;
+  --line: rgba(22, 36, 27, 0.12);
 }
 
 @theme inline {
   --color-cream: var(--cream);
+  --color-parchment: var(--parchment);
   --color-ink: var(--ink);
-  --color-fizz: var(--fizz);
-  --color-lemon: var(--lemon);
+  --color-leaf: var(--leaf);
+  --color-forest: var(--forest);
+  --color-gold: var(--gold);
   --color-mint: var(--mint);
   --color-sky: var(--sky);
   --color-grape: var(--grape);
-  --font-sans: var(--font-inter), system-ui, sans-serif;
-  --font-display: var(--font-display), system-ui, sans-serif;
+  --color-saffron: var(--saffron);
+  --font-sans: var(--font-lato), system-ui, sans-serif;
+  --font-display: var(--font-lora), Georgia, serif;
+  --font-ar: var(--font-ar), "Noto Naskh Arabic", serif;
 }
 
-body { background: var(--cream); color: var(--ink); font-family: var(--font-inter), system-ui, sans-serif; }
-::selection { background: var(--fizz); color: white; }
+body { background: var(--cream); color: var(--ink); font-family: var(--font-lato), system-ui, sans-serif; }
+::selection { background: var(--gold); color: var(--forest); }
 
-.font-display { font-family: var(--font-display), system-ui, sans-serif; letter-spacing: -0.03em; }
+.font-display { font-family: var(--font-lora), Georgia, serif; letter-spacing: -0.015em; }
+.font-ar { font-family: var(--font-ar), "Noto Naskh Arabic", serif; letter-spacing: 0; }
+
+/* Small gold rule used under headings, as in the catalogue */
+.gold-rule { display: block; width: 4.5rem; height: 2px; background: var(--gold); border-radius: 2px; }
+.eyebrow { font-size: .72rem; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--gold); }
 
 @layer components {
-.btn {
-  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
-  border-radius: 999px; padding: .85rem 1.6rem; font-weight: 700; font-size: .95rem;
-  border: 2px solid var(--ink); transition: transform .2s, box-shadow .2s, background .2s, color .2s;
-  cursor: pointer; white-space: nowrap;
-}
-.btn:hover { transform: translate(-2px, -2px); box-shadow: 4px 4px 0 var(--ink); }
-.btn:active { transform: translate(0,0); box-shadow: none; }
-.btn:disabled { opacity: .45; pointer-events: none; }
-.btn-primary { background: var(--fizz); color: white; }
-.btn-dark { background: var(--ink); color: var(--cream); }
-.btn-ghost { background: transparent; }
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+    border-radius: 999px; padding: .85rem 1.6rem; font-weight: 700; font-size: .95rem;
+    border: 1.5px solid transparent; transition: transform .25s, box-shadow .25s, background .25s, color .25s, border-color .25s;
+    cursor: pointer; white-space: nowrap;
+  }
+  .btn:hover { transform: translateY(-2px); box-shadow: 0 14px 28px -14px rgba(18, 51, 33, .55); }
+  .btn:active { transform: translateY(0); box-shadow: none; }
+  .btn:disabled { opacity: .45; pointer-events: none; }
+  .btn-primary { background: var(--leaf); color: #fff; }
+  .btn-primary:hover { background: var(--forest); }
+  .btn-dark { background: var(--forest); color: var(--cream); }
+  .btn-gold { background: var(--gold); color: var(--forest); }
+  .btn-ghost { background: transparent; border-color: var(--leaf); color: var(--leaf); }
+  .btn-ghost:hover { background: var(--leaf); color: #fff; }
 
-.input {
-  width: 100%; border: 2px solid var(--ink); background: white; border-radius: 14px;
-  padding: .75rem 1rem; font-size: .95rem; outline: none; transition: box-shadow .2s;
-}
-.input:focus { box-shadow: 4px 4px 0 var(--fizz); }
-.label { display: block; font-size: .75rem; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; margin-bottom: .35rem; }
+  .input {
+    width: 100%; border: 1.5px solid var(--line); background: #fffdf8; border-radius: 14px;
+    padding: .75rem 1rem; font-size: .95rem; outline: none; transition: border-color .2s, box-shadow .2s;
+  }
+  .input:focus { border-color: var(--leaf); box-shadow: 0 0 0 4px rgba(31, 90, 60, .12); }
+  .label { display: block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .12em; margin-bottom: .35rem; color: var(--leaf); }
 
-.card { border: 2px solid var(--ink); border-radius: 24px; background: white; }
+  .card { border: 1px solid var(--line); border-radius: 22px; background: #fffdf8; }
+  .card-lift { transition: box-shadow .35s, transform .35s; }
+  .card-lift:hover { box-shadow: 0 28px 50px -28px rgba(18, 51, 33, .55); }
 }
 
 @keyframes float { 0%,100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-14px) rotate(calc(var(--r, 0deg) + 2deg)); } }
 .float { animation: float 6s ease-in-out infinite; }
 
 @keyframes marquee { to { transform: translateX(-50%); } }
-.marquee { animation: marquee 28s linear infinite; }
+.marquee { animation: marquee 34s linear infinite; }
 
 /* Pre-hide things JS will animate in, only once we know JS is running (see layout <head>). */
 html.js [data-reveal],
@@ -65,7 +83,7 @@ html.js [data-hero] { visibility: hidden; }
 
 .nav-link { position: relative; }
 .nav-link::after {
-  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: currentColor;
+  content: ""; position: absolute; left: 0; right: 0; bottom: -4px; height: 2px; background: var(--gold);
   transform: scaleX(0); transform-origin: right; transition: transform .35s cubic-bezier(.7,0,.2,1);
 }
 .nav-link:hover::after { transform: scaleX(1); transform-origin: left; }
@@ -77,3 +95,10 @@ details[open] .chev { transform: rotate(45deg); }
 
 .no-scrollbar { scrollbar-width: none; }
 .no-scrollbar::-webkit-scrollbar { display: none; }
+
+/* Subtle paper grain for the deep-green sections */
+.grain { position: relative; isolation: isolate; }
+.grain::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+  background: radial-gradient(1200px 500px at 15% 0%, rgba(201,154,46,.18), transparent 60%), radial-gradient(900px 500px at 100% 100%, rgba(63,154,98,.18), transparent 60%);
+}

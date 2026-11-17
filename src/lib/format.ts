@@ -1,5 +1,5 @@
 export const money = (cents: number) =>
-  new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(cents / 100);
+  `RM ${(cents / 100).toLocaleString("en-MY", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
 export const FREE_SHIPPING_MIN = 5000;
 export const SHIPPING_FLAT = 500;

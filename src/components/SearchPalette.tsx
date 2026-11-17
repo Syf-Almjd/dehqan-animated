@@ -78,12 +78,12 @@ function Palette({ onClose }: { onClose: () => void }) {
   return (
     <div ref={root} role="dialog" aria-modal="true" aria-label="Search products" className="fixed inset-0 z-[70] flex items-start justify-center px-4 pt-[12vh]" onKeyDown={onKey}>
       <div data-backdrop className="absolute inset-0 bg-ink/50 backdrop-blur-sm" onClick={onClose} />
-      <div data-box className="card relative w-full max-w-xl overflow-hidden shadow-[10px_12px_0_var(--ink)]">
-        <div className="flex items-center gap-3 border-b-2 border-ink px-5 py-4">
+      <div data-box className="card relative w-full max-w-xl overflow-hidden shadow-[0_30px_60px_-30px_rgba(18,51,33,.6)]">
+        <div className="flex items-center gap-3 border-b border-ink/10 px-5 py-4">
           <SearchIcon className="h-5 w-5 shrink-0" />
           <input
             ref={input} value={q} onChange={(e) => { setQ(e.target.value); setLoading(true); }}
-            placeholder="Search drinks, bottles, gifts…" aria-label="Search"
+            placeholder="Search raisins, saffron, honey… (English or عربي)" aria-label="Search"
             role="combobox" aria-expanded="true" aria-controls="search-results" aria-activedescendant={results[active] ? `res-${active}` : undefined}
             className="flex-1 bg-transparent text-lg font-semibold outline-none placeholder:text-ink/35"
           />
@@ -95,22 +95,22 @@ function Palette({ onClose }: { onClose: () => void }) {
             <li key={p.id} id={`res-${i}`} role="option" aria-selected={i === active} data-result>
               <Link
                 href={`/products/${p.slug}`} onClick={onClose} onMouseEnter={() => setActive(i)}
-                className={`flex items-center gap-4 rounded-2xl p-2 transition-colors ${i === active ? "bg-lemon" : ""}`}
+                className={`flex items-center gap-4 rounded-2xl p-2 transition-colors ${i === active ? "bg-gold" : ""}`}
               >
-                <ProductVisual p={p} className="h-14 w-14 shrink-0 rounded-xl border-2 border-ink" />
+                <ProductVisual p={p} className="h-14 w-14 shrink-0 rounded-xl border border-ink/15" />
                 <div className="flex-1">
                   <p className="font-bold leading-tight">{p.name}</p>
                   <p className="text-sm opacity-60">{p.category?.name}</p>
                 </div>
-                <span className="font-extrabold">{money(p.price_cents)}</span>
+                <span className="font-bold">{money(p.price_cents)}</span>
                 <ArrowIcon className={`h-4 w-4 transition-transform ${i === active ? "translate-x-0" : "-translate-x-2 opacity-0"}`} />
               </Link>
             </li>
           ))}
-          {q && !loading && results.length === 0 && <li className="p-6 text-center font-semibold opacity-60">No matches for “{q}”. Try “cherry” or “bottle”.</li>}
+          {q && !loading && results.length === 0 && <li className="p-6 text-center font-semibold opacity-60">No matches for “{q}”. Try “raisins” or “saffron”.</li>}
         </ul>
         {q && (
-          <button onClick={() => go(`/products?q=${encodeURIComponent(q)}`)} className="w-full border-t-2 border-ink px-5 py-3 text-left text-sm font-bold hover:bg-lemon">
+          <button onClick={() => go(`/products?q=${encodeURIComponent(q)}`)} className="w-full border-t border-ink/10 px-5 py-3 text-left text-sm font-bold hover:bg-gold">
             See all results for “{q}” →
           </button>
         )}

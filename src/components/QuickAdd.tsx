@@ -18,7 +18,7 @@ export default function QuickAdd({ p, className = "" }: { p: CardProduct; classN
       onClick={() => {
         showHeader();
         add(p);
-        flyToCart(btn.current?.closest("[data-card]")?.querySelector("[data-art] svg"));
+        flyToCart(btn.current?.closest("[data-card]")?.querySelector("[data-art] img, [data-art] svg"));
         toast(`${p.name} added`, { href: "/cart", cta: "View cart" });
       }}
       className={`btn btn-primary !py-2.5 !text-sm transition-all duration-300 md:translate-y-3 md:opacity-0 md:group-hover:translate-y-0 md:group-hover:opacity-100 md:focus-visible:translate-y-0 md:focus-visible:opacity-100 ${className}`}

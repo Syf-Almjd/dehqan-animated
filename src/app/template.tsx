@@ -26,10 +26,10 @@ export default function Template({ children }: { children: React.ReactNode }) {
     <>
       <div
         ref={wipe} aria-hidden="true"
-        className="pointer-events-none fixed inset-x-0 -bottom-[15vh] top-0 z-[75] grid place-items-center bg-fizz [border-radius:0_0_50%_50%/0_0_15vh_15vh]"
+        className="pointer-events-none fixed inset-x-0 -bottom-[15vh] top-0 z-[75] grid place-items-center bg-forest [border-radius:0_0_50%_50%/0_0_15vh_15vh]"
         style={{ visibility: isFirst ? "hidden" : "visible" }}
       >
-        <span data-wipe-logo><Logo className="!text-cream text-5xl" /></span>
+        <span data-wipe-logo className="scale-150"><Logo light /></span>
       </div>
       {children}
     </>

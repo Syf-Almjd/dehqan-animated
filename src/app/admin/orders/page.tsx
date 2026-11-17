@@ -9,7 +9,7 @@ export default async function AdminOrders() {
   const orders = (data as Order[]) ?? [];
   return (
     <>
-      <h1 className="font-display text-5xl font-extrabold">Orders</h1>
+      <h1 className="font-display text-5xl font-bold">Orders</h1>
       <div className="mt-6 space-y-3">
         {orders.length === 0 && <p className="card p-8 text-center font-semibold">No orders yet.</p>}
         {orders.map((o) => (
