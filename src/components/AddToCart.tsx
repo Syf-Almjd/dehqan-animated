@@ -45,7 +45,7 @@ export default function AddToCart({ product }: { product: CardProduct }) {
   };
 
   const stepper = (
-    <div className="flex items-center rounded-full border-2 border-ink bg-white">
+    <div className="flex items-center rounded-full border border-ink/15 bg-white">
       <button className="grid h-11 w-11 place-items-center" onClick={() => setQty((q) => Math.max(1, q - 1))} aria-label="Decrease quantity"><MinusIcon /></button>
       <span className="w-8 text-center font-bold" aria-live="polite">{qty}</span>
       <button className="grid h-11 w-11 place-items-center disabled:opacity-30" disabled={qty >= product.stock} onClick={() => setQty((q) => Math.min(product.stock, q + 1))} aria-label="Increase quantity"><PlusIcon /></button>
@@ -64,17 +64,17 @@ export default function AddToCart({ product }: { product: CardProduct }) {
         </div>
         {!out && <button onClick={() => addToCart("checkout")} className="btn btn-dark w-full">Buy it now</button>}
         {!out && product.stock <= 30 && (
-          <p className="flex items-center gap-2 text-sm font-semibold text-fizz">
-            <span className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-fizz opacity-75" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-fizz" /></span>
+          <p className="flex items-center gap-2 text-sm font-semibold text-leaf">
+            <span className="relative flex h-2.5 w-2.5"><span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-leaf opacity-75" /><span className="relative inline-flex h-2.5 w-2.5 rounded-full bg-leaf" /></span>
             Only {product.stock} left – selling fast
           </p>
         )}
       </div>
 
-      <div ref={bar} className="fixed inset-x-0 bottom-0 z-40 border-t-2 border-ink bg-cream/95 px-4 py-3 backdrop-blur" aria-hidden={false}>
+      <div ref={bar} className="fixed inset-x-0 bottom-0 z-40 border-t border-ink/10 bg-cream/95 px-4 py-3 backdrop-blur" aria-hidden={false}>
         <div className="mx-auto flex max-w-7xl items-center gap-4">
           <div className="hidden flex-1 sm:block">
-            <p className="font-display text-lg font-extrabold leading-tight">{product.name}</p>
+            <p className="font-display text-lg font-bold leading-tight">{product.name}</p>
             <p className="text-sm font-bold opacity-60">{money(product.price_cents)}</p>
           </div>
           <div className="hidden sm:block">{stepper}</div>

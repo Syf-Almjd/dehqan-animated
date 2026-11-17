@@ -40,7 +40,7 @@ export default function MotionProvider({ children }: { children: React.ReactNode
   return (
     <>
       <div className="pointer-events-none fixed inset-x-0 top-0 z-[60] h-[3px]">
-        <div ref={bar} className="h-full origin-left scale-x-0 bg-fizz" />
+        <div ref={bar} className="h-full origin-left scale-x-0 bg-leaf" />
       </div>
       {children}
     </>

@@ -42,9 +42,9 @@ export default function ReviewMarquee({ reviews }: { reviews: Review[] }) {
       {rows.map((row, r) => (
         <div key={r} data-row className="flex w-max gap-4 will-change-transform">
           {[...row, ...row].map((rv, i) => (
-            <figure key={i} className={`card w-[340px] shrink-0 p-5 ${(i + r) % 3 === 0 ? "bg-lemon" : (i + r) % 3 === 1 ? "bg-white" : "bg-[#ffe1d6]"}`}>
+            <figure key={i} className={`card w-[340px] shrink-0 p-5 ${(i + r) % 3 === 0 ? "bg-gold" : (i + r) % 3 === 1 ? "bg-white" : "bg-[#ffe1d6]"}`}>
               <Stars value={rv.rating} size={15} />
-              {rv.title && <p className="font-display mt-2 text-xl font-extrabold leading-tight">“{rv.title}”</p>}
+              {rv.title && <p className="font-display mt-2 text-xl font-bold leading-tight">“{rv.title}”</p>}
               <blockquote className="mt-1 line-clamp-3 text-sm opacity-75">{rv.body}</blockquote>
               <figcaption className="mt-3 flex items-center justify-between text-xs font-bold">
                 <span>{rv.author_name}</span>

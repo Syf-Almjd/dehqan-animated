@@ -32,7 +32,7 @@ export const useCart = create<CartState>()(
       clear: () => set({ items: [], coupon: null }),
       setCoupon: (coupon) => set({ coupon }),
     }),
-    { name: "fizzo-cart" },
+    { name: "dehqan-cart" },
   ),
 );
 

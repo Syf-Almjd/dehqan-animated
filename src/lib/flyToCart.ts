@@ -9,10 +9,14 @@ export function flyToCart(source: Element | null | undefined, onDone?: () => voi
   if (!s.width) return onDone?.();
   const clone = source.cloneNode(true) as HTMLElement;
   clone.removeAttribute("class");
+  clone.removeAttribute("srcset");
+  clone.removeAttribute("sizes");
   Object.assign(clone.style, {
-    position: "fixed", left: `${s.left}px`, top: `${s.top}px`, width: `${s.width}px`, height: `${s.height}px`,
-    zIndex: "90", pointerEvents: "none", margin: "0",
+    position: "fixed", inset: "auto", left: `${s.left}px`, top: `${s.top}px`, width: `${s.width}px`, height: `${s.height}px`,
+    zIndex: "90", pointerEvents: "none", margin: "0", objectFit: "cover", borderRadius: "18px",
+    boxShadow: "0 20px 40px -18px rgba(18,51,33,.6)",
   });
+  if (clone instanceof HTMLImageElement) clone.src = (source as HTMLImageElement).currentSrc || clone.src;
   document.body.appendChild(clone);
   const dx = t.left + t.width / 2 - (s.left + s.width / 2);
   const dy = t.top + t.height / 2 - (s.top + s.height / 2);

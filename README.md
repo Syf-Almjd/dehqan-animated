@@ -1,4 +1,8 @@
-# Fizzo — Next.js + Supabase e-commerce
+# Dehqan Farms — Next.js + Supabase e-commerce
+
+Storefront for **Dehqan Farms Export** (دهقان فارمز للتصدير): Kandahar raisins, sun-dried fruits, nuts, Herati saffron, Badakhshan mountain honey and Shilajit – content, Arabic text and photos taken from `docs/Dehqan_Farms_Export_Catalogue_EN-AR_SAYED.pdf`.
+
+> ⚠️ **Prices and stock are placeholders.** The export catalogue has no prices – set real ones in `/admin` (or in `src/lib/data.ts` before seeding).
 
 Storefront, cart, checkout, customer accounts and an admin dashboard.
 Landing page features a GSAP ScrollTrigger "ticker-tape" sentence (`src/components/Ticker.tsx`).
@@ -23,7 +27,8 @@ For quick testing, disable "Confirm email" in Supabase Auth settings.
 ## Features
 - **Storefront:** animated landing page (3D hero, GSAP scroll-pinned ticker, review marquee), shop with category / price / stock / sale filters + sort, ⌘K instant search, product pages with a drag-to-spin 3D viewer, ratings & reviews, sticky add-to-cart bar, recently viewed.
 - **Cart:** slide-out drawer, fly-to-cart animation, quick add from cards, free-shipping meter, wishlist (saved per device).
-- **Checkout:** coupon codes (`WELCOME10`, `FIZZ5` in the seed), server-verified prices/stock, order tracking timeline.
+- **Wholesale:** `/wholesale` request-a-quote form (stored in the `inquiries` table), WhatsApp/email links, downloadable catalogue PDF.
+- **Checkout:** coupon codes (`WELCOME10` in the seed), server-verified prices/stock, order tracking timeline.
 - **Accounts:** sign up / in, order history, profile editing.
 - **Admin (`/admin`):** dashboard, products CRUD, order status, coupons.
 - **Motion:** Lenis smooth scroll, page-transition wipe, scroll reveals, 3D tilt cards, magnetic buttons.
@@ -33,6 +38,6 @@ For quick testing, disable "Confirm email" in Supabase Auth settings.
 - **Security:** Row Level Security on every table. Customers only see their own orders; only admins write the catalog.
 - **Checkout:** `place_order()` (Postgres function) re-reads prices, stock and coupon discounts from the DB, decrements stock and creates the order atomically — the browser's cart prices are never trusted.
 - `schema.sql` is safe to re-run, so after pulling updates just run it again (then `seed.sql`).
-- **Shipping:** free over $50, else $5 (`src/lib/format.ts` + `place_order`).
+- **Shipping:** free over RM 50, else RM 5 (`src/lib/format.ts` + `place_order`).
 - **Payments:** orders are "pay on delivery". To take cards, add Stripe Checkout in `src/app/actions/checkout.ts` and set status to `paid` from a webhook.
 - Regenerate seed after editing demo data: `node --experimental-strip-types scripts/make-seed.ts > supabase/seed.sql`

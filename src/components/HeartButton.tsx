@@ -23,7 +23,7 @@ export default function HeartButton({ p, className = "" }: { p: CardProduct; cla
       for (let i = 0; i < 6; i++) {
         const dot = document.createElement("span");
         dot.textContent = "♥";
-        dot.className = "pointer-events-none absolute left-1/2 top-1/2 text-fizz text-xs";
+        dot.className = "pointer-events-none absolute left-1/2 top-1/2 text-leaf text-xs";
         el.appendChild(dot);
         const a = (i / 6) * Math.PI * 2;
         gsap.fromTo(dot, { x: -4, y: -8, scale: 0.4, opacity: 1 }, { x: Math.cos(a) * 26 - 4, y: Math.sin(a) * 26 - 8, scale: 1, opacity: 0, duration: 0.7, ease: "power3.out", onComplete: () => dot.remove() });
@@ -36,7 +36,7 @@ export default function HeartButton({ p, className = "" }: { p: CardProduct; cla
     <span className={className || "relative"}>
       <button
         ref={btn} onClick={click} aria-pressed={on} aria-label={on ? `Remove ${p.name} from wishlist` : `Save ${p.name} to wishlist`}
-        className={`relative grid h-10 w-10 place-items-center rounded-full border-2 border-ink bg-white transition-colors hover:bg-lemon ${on ? "text-fizz" : ""}`}
+        className={`relative grid h-10 w-10 place-items-center rounded-full border border-ink/15 bg-white transition-colors hover:bg-gold ${on ? "text-leaf" : ""}`}
       >
         <HeartIcon filled={on} className="h-5 w-5" />
       </button>

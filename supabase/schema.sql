@@ -1,4 +1,4 @@
--- Fizzo schema. Safe to re-run: Supabase Dashboard → SQL Editor → paste & run.
+-- Dehqan Farms schema. Safe to re-run: Supabase Dashboard → SQL Editor → paste & run.
 -- Then run supabase/seed.sql for demo products, reviews and coupons.
 
 create extension if not exists "pgcrypto";
@@ -37,6 +37,34 @@ create table if not exists public.products (
   created_at timestamptz not null default now()
 );
 create index if not exists products_category_idx on public.products(category_id);
+
+-- Catalogue fields (bilingual EN/AR, origin, pack size, photo gallery)
+alter table public.categories add column if not exists name_ar text;
+alter table public.categories add column if not exists kicker text;
+alter table public.categories add column if not exists kicker_ar text;
+alter table public.categories add column if not exists description_ar text;
+alter table public.categories add column if not exists image_url text;
+alter table public.categories add column if not exists notes jsonb;
+alter table public.products add column if not exists name_ar text;
+alter table public.products add column if not exists description_ar text;
+alter table public.products add column if not exists origin text;
+alter table public.products add column if not exists origin_ar text;
+alter table public.products add column if not exists unit text;
+alter table public.products add column if not exists gallery text[];
+
+-- Wholesale / export enquiries from the /wholesale page
+create table if not exists public.inquiries (
+  id uuid primary key default gen_random_uuid(),
+  name text not null,
+  company text,
+  email text not null,
+  phone text,
+  country text,
+  products text,
+  quantity text,
+  message text,
+  created_at timestamptz not null default now()
+);
 
 create table if not exists public.coupons (
   code text primary key check (code = upper(code)),
@@ -185,6 +213,7 @@ alter table public.orders                 enable row level security;
 alter table public.order_items            enable row level security;
 alter table public.reviews                enable row level security;
 alter table public.newsletter_subscribers enable row level security;
+alter table public.inquiries              enable row level security;
 
 drop policy if exists "profiles read own or admin" on public.profiles;
 create policy "profiles read own or admin" on public.profiles for select using (id = auth.uid() or public.is_admin());
@@ -227,6 +256,11 @@ drop policy if exists "newsletter anyone can join" on public.newsletter_subscrib
 create policy "newsletter anyone can join" on public.newsletter_subscribers for insert with check (true);
 drop policy if exists "newsletter admin read" on public.newsletter_subscribers;
 create policy "newsletter admin read" on public.newsletter_subscribers for select using (public.is_admin());
+
+drop policy if exists "inquiries anyone can send" on public.inquiries;
+create policy "inquiries anyone can send" on public.inquiries for insert with check (true);
+drop policy if exists "inquiries admin read" on public.inquiries;
+create policy "inquiries admin read" on public.inquiries for select using (public.is_admin());
 
 -- Make yourself admin after signing up:
 --   update public.profiles set role = 'admin' where id = (select id from auth.users where email = 'you@example.com');

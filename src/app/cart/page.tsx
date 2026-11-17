@@ -17,8 +17,8 @@ export default function CartPage() {
   if (!items.length)
     return (
       <div className="mx-auto max-w-xl px-5 py-28 text-center">
-        <p className="text-6xl">🥤</p>
-        <h1 className="font-display mt-4 text-5xl font-extrabold">Your cart is empty</h1>
+        <p className="text-6xl">🧺</p>
+        <h1 className="font-display mt-4 text-5xl font-bold">Your cart is empty</h1>
         <p className="mt-2 opacity-70">Let&apos;s fix that.</p>
         <Link href="/products" className="btn btn-primary mt-8">Start shopping</Link>
       </div>
@@ -26,7 +26,7 @@ export default function CartPage() {
 
   return (
     <div className="mx-auto max-w-6xl px-5 py-12">
-      <h1 className="font-display text-6xl font-extrabold">Your cart</h1>
+      <h1 className="font-display text-6xl font-bold">Your cart</h1>
       <div className="mt-8 grid gap-8 lg:grid-cols-[1fr_380px]">
         <ul className="space-y-4">
           {items.map((i) => (
@@ -34,11 +34,11 @@ export default function CartPage() {
               <Link href={`/products/${i.slug}`} className="w-24 shrink-0 sm:w-32"><ProductVisual p={i} className="aspect-square rounded-2xl" /></Link>
               <div className="flex flex-1 flex-col justify-between">
                 <div className="flex justify-between gap-3">
-                  <Link href={`/products/${i.slug}`} className="font-display text-xl font-bold leading-tight hover:text-fizz">{i.name}</Link>
+                  <Link href={`/products/${i.slug}`} className="font-display text-xl font-bold leading-tight hover:text-leaf">{i.name}</Link>
                   <p className="font-bold">{money(i.price_cents * i.qty)}</p>
                 </div>
                 <div className="flex items-center justify-between">
-                  <div className="flex items-center rounded-full border-2 border-ink">
+                  <div className="flex items-center rounded-full border border-ink/15">
                     <button className="h-9 w-9 font-bold" onClick={() => setQty(i.id, i.qty - 1)} aria-label="Decrease">−</button>
                     <span className="w-7 text-center text-sm font-bold">{i.qty}</span>
                     <button className="h-9 w-9 font-bold" onClick={() => setQty(i.id, i.qty + 1)} aria-label="Increase">+</button>
@@ -50,7 +50,7 @@ export default function CartPage() {
           ))}
         </ul>
         <aside className="card h-fit space-y-3 bg-white p-6 lg:sticky lg:top-24">
-          <h2 className="font-display text-2xl font-extrabold">Summary</h2>
+          <h2 className="font-display text-2xl font-bold">Summary</h2>
           {toFree > 0 ? (
             <div>
               <p className="text-sm font-semibold">Add {money(toFree)} more for free shipping</p>
@@ -59,7 +59,7 @@ export default function CartPage() {
           ) : <p className="text-sm font-bold text-mint">🎉 You&apos;ve unlocked free shipping</p>}
           <div className="flex justify-between"><span>Subtotal</span><span className="font-bold">{money(subtotal)}</span></div>
           <div className="flex justify-between"><span>Shipping</span><span className="font-bold">{shipping ? money(shipping) : "Free"}</span></div>
-          <div className="flex justify-between border-t-2 border-ink pt-3 text-xl font-extrabold"><span>Total</span><span>{money(subtotal + shipping)}</span></div>
+          <div className="flex justify-between border-t border-ink/10 pt-3 text-xl font-bold"><span>Total</span><span>{money(subtotal + shipping)}</span></div>
           <Link href="/checkout" className="btn btn-primary w-full">Checkout →</Link>
         </aside>
       </div>

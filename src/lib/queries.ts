@@ -8,12 +8,12 @@ export type PriceBand = "under-15" | "15-30" | "30-plus";
 export type ProductFilter = { category?: string; q?: string; sort?: Sort; featured?: boolean; limit?: number; price?: PriceBand; inStock?: boolean; sale?: boolean };
 
 export const PRICE_BANDS: { id: PriceBand; label: string; min: number; max: number }[] = [
-  { id: "under-15", label: "Under $15", min: 0, max: 1499 },
-  { id: "15-30", label: "$15 – $30", min: 1500, max: 2999 },
-  { id: "30-plus", label: "$30 +", min: 3000, max: 1e9 },
+  { id: "under-15", label: "Under RM 15", min: 0, max: 1499 },
+  { id: "15-30", label: "RM 15 – RM 30", min: 1500, max: 2999 },
+  { id: "30-plus", label: "RM 30 +", min: 3000, max: 1e9 },
 ];
 
-const SELECT = "*, category:categories(name, slug)";
+const SELECT = "*, category:categories(name, slug, name_ar)";
 
 function aggregate(rows: { product_id: string; rating: number }[]): Record<string, Rating> {
   const acc: Record<string, { sum: number; count: number }> = {};
@@ -35,6 +35,11 @@ export async function getCategories(): Promise<Category[]> {
   return (data as Category[]) ?? [];
 }
 
+export async function getCategory(slug?: string): Promise<Category | null> {
+  if (!slug) return null;
+  return (await getCategories()).find((c) => c.slug === slug) ?? null;
+}
+
 export async function getProducts(f: ProductFilter = {}): Promise<Product[]> {
   const band = PRICE_BANDS.find((b) => b.id === f.price);
   let list: Product[];
@@ -43,7 +48,7 @@ export async function getProducts(f: ProductFilter = {}): Promise<Product[]> {
     list = demoProducts.filter((p) => p.active);
     if (f.category) list = list.filter((p) => p.category?.slug === f.category);
     if (f.featured) list = list.filter((p) => p.featured);
-    if (f.q) list = list.filter((p) => (p.name + " " + p.description).toLowerCase().includes(f.q!.toLowerCase()));
+    if (f.q) list = list.filter((p) => [p.name, p.description, p.name_ar, p.origin, p.category?.name].join(" ").toLowerCase().includes(f.q!.toLowerCase()));
     if (band) list = list.filter((p) => p.price_cents >= band.min && p.price_cents <= band.max);
     if (f.inStock) list = list.filter((p) => p.stock > 0);
   } else {
@@ -57,7 +62,7 @@ export async function getProducts(f: ProductFilter = {}): Promise<Product[]> {
     if (f.featured) query = query.eq("featured", true);
     if (f.q) {
       const term = f.q.replace(/[%,()*]/g, " ").trim();
-      query = query.or(`name.ilike.%${term}%,description.ilike.%${term}%`);
+      query = query.or(`name.ilike.%${term}%,description.ilike.%${term}%,name_ar.ilike.%${term}%,origin.ilike.%${term}%`);
     }
     if (band) query = query.gte("price_cents", band.min).lte("price_cents", band.max);
     if (f.inStock) query = query.gt("stock", 0);

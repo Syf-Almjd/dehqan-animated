@@ -1,5 +1,6 @@
 "use client";
 import { useRef, type ReactNode } from "react";
+import Image from "next/image";
 import { useIsoLayoutEffect } from "@/lib/useIsoLayoutEffect";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -15,31 +16,34 @@ const Svg = ({ w, vb, children, className = "" }: { w: number; vb: string; child
 const P = (p: React.SVGProps<SVGPathElement>) => <path data-draw pathLength={1} vectorEffect="non-scaling-stroke" {...p} />;
 
 const glyphs = {
-  bottle: <Svg w={0.5} vb="0 0 50 100" className="text-fizz"><P d="M19 4h12v14c0 10 14 14 14 28v42a8 8 0 0 1-8 8H13a8 8 0 0 1-8-8V46c0-14 14-18 14-28Z" /><P d="M12 56h26M12 70h26" /></Svg>,
-  sparkle: <Svg w={0.75} vb="0 0 100 100" className="text-grape"><P d="M50 4c4 28 18 42 46 46-28 4-42 18-46 46-4-28-18-42-46-46C32 46 46 32 50 4Z" /></Svg>,
-  wave: <Svg w={2.6} vb="0 0 260 100" className="text-sky"><P d="M4 52c20-48 40-48 62 0s42 48 62 0 42-48 62 0 40 48 66 0" /></Svg>,
-  loop: <Svg w={2.2} vb="0 0 220 100" className="text-fizz"><P d="M4 80C50 80 70 20 100 30s-10 60-34 40S100 6 150 36s40 40 66 10" /></Svg>,
-  star: <Svg w={0.75} vb="0 0 100 100" className="text-ink"><P d="M50 6l13 28 31 4-23 21 6 31-27-15-27 15 6-31L6 38l31-4Z" /></Svg>,
-  bubbles: <Svg w={1.1} vb="0 0 110 100" className="text-mint"><P d="M30 62a22 22 0 1 0 .01 0Z" /><P d="M78 34a14 14 0 1 0 .01 0Z" /><P d="M84 82a9 9 0 1 0 .01 0Z" /></Svg>,
-  arrow: <Svg w={2.4} vb="0 0 240 100" className="text-ink"><P d="M4 70C60 10 130 10 170 50c14 14 30 18 62 8" /><P d="M206 30l28 28-34 14" /></Svg>,
-  long: <Svg w={3.6} vb="0 0 360 40" className="text-fizz"><P d="M4 20h352" /></Svg>,
-  heart: <Svg w={0.8} vb="0 0 100 90" className="text-fizz"><P d="M50 84C14 56 4 38 4 24 4 10 15 4 26 4c10 0 19 6 24 16C55 10 64 4 74 4c11 0 22 6 22 20 0 14-10 32-46 60Z" /></Svg>,
-  smile: <Svg w={0.9} vb="0 0 100 100" className="text-ink"><P d="M50 6a44 44 0 1 0 .01 0Z" /><P d="M30 60c10 16 30 16 40 0" /><P d="M35 36v4M65 36v4" /></Svg>,
+  wheat: <Svg w={0.7} vb="0 0 70 100" className="text-gold"><P d="M35 96V20" /><P d="M35 30c-10-3-15-11-15-20 10 2 15 9 15 20Zm0 0c10-3 15-11 15-20-10 2-15 9-15 20Z" /><P d="M35 52c-10-3-15-11-15-20 10 2 15 9 15 20Zm0 0c10-3 15-11 15-20-10 2-15 9-15 20Z" /><P d="M35 74c-10-3-15-11-15-20 10 2 15 9 15 20Zm0 0c10-3 15-11 15-20-10 2-15 9-15 20Z" /></Svg>,
+  hand: <Svg w={2.4} vb="0 0 240 100" className="text-leaf"><P d="M4 60c40 0 60-30 100-30s50 20 80 20 40-12 52-24" /><P d="M200 18l28 8-10 26" /></Svg>,
+  sun: <Svg w={0.95} vb="0 0 100 100" className="text-gold"><P d="M50 30a20 20 0 1 0 .01 0Z" /><P d="M50 4v12M50 84v12M4 50h12M84 50h12M17 17l9 9M74 74l9 9M83 17l-9 9M26 74l-9 9" /></Svg>,
+  mountain: <Svg w={1.8} vb="0 0 180 100" className="text-leaf"><P d="M4 92 62 20l28 34 22-26 64 64Z" /><P d="M48 38l14 10 12-8" /></Svg>,
+  crocus: <Svg w={0.85} vb="0 0 90 100" className="text-saffron"><P d="M45 96V52" /><P d="M45 52C30 46 22 30 28 10c10 8 16 22 17 42Zm0 0c15-6 23-22 17-42-10 8-16 22-17 42Z" /><P d="M45 52c-6-14-2-30 0-44 2 14 6 30 0 44Z" /></Svg>,
+  drop: <Svg w={0.65} vb="0 0 65 100" className="text-gold"><P d="M32 6C20 30 8 46 8 64a24 24 0 0 0 48 0C56 46 44 30 32 6Z" /><P d="M22 66c0 8 5 13 12 14" /></Svg>,
+  diamond: <Svg w={0.5} vb="0 0 50 100" className="text-gold"><P d="M25 30l18 20-18 20L7 50Z" /></Svg>,
+  long: <Svg w={3.2} vb="0 0 320 40" className="text-gold"><P d="M4 20h312" /></Svg>,
+  arrow: <Svg w={2.4} vb="0 0 240 100" className="text-forest"><P d="M4 70C60 10 130 10 170 50c14 14 30 18 62 8" /><P d="M206 30l28 28-34 14" /></Svg>,
+  heart: <Svg w={0.8} vb="0 0 100 90" className="text-saffron"><P d="M50 84C14 56 4 38 4 24 4 10 15 4 26 4c10 0 19 6 24 16C55 10 64 4 74 4c11 0 22 6 22 20 0 14-10 32-46 60Z" /></Svg>,
 } as const;
 
-type Item = { w: string; gap?: number; hl?: string } | { g: keyof typeof glyphs; gap?: number };
+type Item =
+  | { w: string; gap?: number; hl?: string }
+  | { g: keyof typeof glyphs; gap?: number }
+  | { img: string; alt: string; gap?: number };
 
-// "In every bottle, discover the undeniable Real Magic of sharing pure Refreshment that brings us Together"
+// One long sentence, read like a ticker tape. Round harvest photos sit inline like punctuation.
 const SENTENCE: Item[] = [
-  { w: "In" }, { w: "every", gap: 0.28 }, { w: "bottle,", gap: 0.3 }, { g: "bottle", gap: 0.35 },
-  { w: "discover", gap: 0.9 }, { g: "sparkle", gap: 0.3 }, { w: "the", gap: 0.35 },
-  { g: "long", gap: 0.4 }, { w: "undeniable", gap: 0.4 }, { g: "wave", gap: 0.35 },
-  { w: "Real Magic", hl: "#ff4a1c", gap: 0.5 }, { g: "star", gap: 0.45 },
-  { w: "of", gap: 0.5 }, { w: "sharing", gap: 0.28 }, { g: "bubbles", gap: 0.4 },
-  { w: "pure", gap: 0.7 }, { g: "loop", gap: 0.3 },
-  { w: "Refreshment", hl: "#2d7dff", gap: 0.3 }, { g: "arrow", gap: 0.7 },
-  { w: "that", gap: 0.3 }, { w: "brings", gap: 0.28 }, { w: "us", gap: 0.28 }, { g: "heart", gap: 0.45 },
-  { w: "Together", hl: "#6c5ce7", gap: 0.5 }, { g: "smile", gap: 0.3 },
+  { w: "From" }, { w: "the", gap: 0.28 }, { w: "farmer’s", gap: 0.28 }, { w: "hand", gap: 0.28 }, { g: "hand", gap: 0.35 },
+  { w: "the", gap: 0.4 }, { w: "world-famous", gap: 0.28 }, { w: "raisins", gap: 0.28 }, { img: "/products/green-raisins.jpg", alt: "Green raisins", gap: 0.3 },
+  { w: "of", gap: 0.3 }, { w: "Kandahar,", hl: "#c99a2e", gap: 0.3 }, { g: "sun", gap: 0.4 },
+  { w: "the", gap: 0.45 }, { w: "red gold", hl: "#b3261e", gap: 0.28 }, { g: "crocus", gap: 0.3 }, { img: "/products/saffron-front.jpg", alt: "Herati saffron", gap: 0.25 },
+  { w: "of", gap: 0.35 }, { w: "Herat", gap: 0.28 }, { g: "long", gap: 0.4 },
+  { w: "and", gap: 0.4 }, { w: "wild", gap: 0.28 }, { w: "honey", gap: 0.28 }, { g: "drop", gap: 0.3 }, { img: "/products/honey-amber.jpg", alt: "Mountain honey", gap: 0.25 },
+  { w: "of", gap: 0.35 }, { w: "Badakhshan", hl: "#1f5a3c", gap: 0.28 }, { g: "mountain", gap: 0.4 },
+  { w: "travel", gap: 0.45 }, { w: "straight", gap: 0.28 }, { g: "arrow", gap: 0.35 },
+  { w: "to", gap: 0.35 }, { w: "your", gap: 0.28 }, { w: "table", gap: 0.28 }, { g: "heart", gap: 0.4 }, { g: "wheat", gap: 0.3 },
 ];
 
 // Deterministic "random" bubbles for the parallax depth layers
@@ -101,6 +105,12 @@ export default function Ticker() {
         gsap.fromTo(g.firstElementChild, { y: 60, rotation: -40, scale: 0.4 }, { y: 0, rotation: 0, scale: 1, ease: "back.out(2)", scrollTrigger: { ...st } });
       });
 
+      // 4b. Inline photos roll in like coins.
+      el.querySelectorAll<HTMLElement>("[data-photo] > span").forEach((ph) => {
+        gsap.fromTo(ph, { scale: 0.2, rotation: -180 }, { scale: 1, rotation: 0, ease: "back.out(1.8)",
+          scrollTrigger: { trigger: ph, containerAnimation: move, start: "left 100%", end: "left 60%", scrub: true } });
+      });
+
       // 5. 3D "drum": every word is curved around a cylinder based on its distance from screen centre,
       //    and the whole line leans with scroll speed.
       const sec = section.current!;
@@ -145,27 +155,35 @@ export default function Ticker() {
     // The wrapper matters: GSAP's pin inserts a "pin-spacer" around <section>. React owns this outer div,
     // so on route change it removes the wrapper cleanly instead of crashing on the moved node.
     <div>
-    <section ref={section} aria-label="Our promise" className="relative h-screen overflow-hidden bg-lemon text-ink" style={{ perspective: PERSPECTIVE }}>
+    <section ref={section} aria-label="From the farmer’s hand" className="relative h-screen overflow-hidden bg-parchment text-forest" style={{ perspective: PERSPECTIVE }}>
       {/* far layer */}
       <div ref={back} aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 w-[260vw]">
         {BACK.map((b, i) => (
-          <span key={i} className="absolute rounded-full border-2 border-ink/15" style={{ left: `${b.left}%`, top: `${b.top}%`, width: b.size, height: b.size }} />
+          <span key={i} className="absolute rounded-full border border-gold/40" style={{ left: `${b.left}%`, top: `${b.top}%`, width: b.size, height: b.size }} />
         ))}
       </div>
 
-      <p className="absolute left-5 top-24 z-30 text-xs font-bold uppercase tracking-[.2em] md:left-10">Our promise — keep scrolling ↓</p>
+      <p className="absolute left-5 top-24 z-30 text-xs font-bold uppercase tracking-[.2em] md:left-10">The harvest · keep scrolling ↓ · <span className="font-ar tracking-normal" lang="ar">من يد المزارع</span></p>
 
       <div
         ref={track}
-        className="font-display relative z-10 flex h-full w-max items-center whitespace-nowrap pl-[12vw] pr-[30vw] font-extrabold leading-none will-change-transform"
+        className="font-display relative z-10 flex h-full w-max items-center whitespace-nowrap pl-[12vw] pr-[30vw] font-bold leading-none will-change-transform"
         style={{ fontSize: "clamp(4.5rem, 21vh, 15rem)", transformStyle: "preserve-3d" }}
       >
         {SENTENCE.map((it, i) => {
           const style = { marginLeft: `${it.gap ?? 0}em` };
           if ("g" in it)
             return <span key={i} data-item data-glyph className="inline-flex items-center" style={style}><span className="inline-flex">{glyphs[it.g]}</span></span>;
+          if ("img" in it)
+            return (
+              <span key={i} data-item data-photo className="relative inline-block shrink-0" style={{ ...style, width: "0.95em", height: "0.95em" }}>
+                <span className="absolute inset-0 overflow-hidden rounded-full border-[0.035em] border-gold shadow-[0_.1em_.25em_-.08em_rgba(18,51,33,.6)]">
+                  <Image src={it.img} alt={it.alt} fill sizes="240px" className="object-cover" />
+                </span>
+              </span>
+            );
           return it.hl ? (
-            <span key={i} data-item data-hl={it.hl} className="inline-block" style={{ ...style, WebkitTextStroke: "0.05em #14110f", paintOrder: "stroke fill", color: "transparent" }}>{it.w}</span>
+            <span key={i} data-item data-hl={it.hl} className="inline-block" style={{ ...style, WebkitTextStroke: "0.025em #123321", paintOrder: "stroke fill", color: "transparent" }}>{it.w}</span>
           ) : (
             <span key={i} data-item className="inline-block" style={style}>{it.w}</span>
           );
@@ -175,11 +193,11 @@ export default function Ticker() {
       {/* near layer – big soft bubbles that rush past the camera */}
       <div ref={front} aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 z-20 w-[420vw]">
         {FRONT.map((b, i) => (
-          <span key={i} className="absolute rounded-full border-[3px] border-white/70 bg-white/20 blur-[2px]" style={{ left: `${b.left}%`, top: `${b.top * 0.9}%`, width: b.size, height: b.size }} />
+          <span key={i} className="absolute rounded-full border-2 border-gold/30 bg-gold/10 blur-[3px]" style={{ left: `${b.left}%`, top: `${b.top * 0.9}%`, width: b.size, height: b.size }} />
         ))}
       </div>
 
-      <div className="absolute inset-x-0 bottom-0 z-30 h-2 bg-ink/15"><div ref={bar} className="h-full origin-left scale-x-0 bg-ink" /></div>
+      <div className="absolute inset-x-0 bottom-0 z-30 h-1.5 bg-forest/10"><div ref={bar} className="h-full origin-left scale-x-0 bg-gold" /></div>
     </section>
     </div>
   );
