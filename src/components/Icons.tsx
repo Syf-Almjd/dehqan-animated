@@ -1,0 +1,13 @@
+type P = { className?: string };
+const base = { fill: "none", stroke: "currentColor", strokeWidth: 2.2, strokeLinecap: "round" as const, strokeLinejoin: "round" as const, "aria-hidden": true };
+export const SearchIcon = ({ className = "h-5 w-5" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><circle cx="11" cy="11" r="7" /><path d="m20 20-3.5-3.5" /></svg>;
+export const HeartIcon = ({ className = "h-5 w-5", filled = false }: P & { filled?: boolean }) => <svg viewBox="0 0 24 24" className={className} {...base} fill={filled ? "currentColor" : "none"}><path d="M12 20.5C5.5 16 3 12.7 3 9.3 3 6.6 5.1 4.5 7.7 4.5c1.7 0 3.3.9 4.3 2.4 1-1.5 2.6-2.4 4.3-2.4C18.9 4.5 21 6.6 21 9.3c0 3.4-2.5 6.7-9 11.2Z" /></svg>;
+export const UserIcon = ({ className = "h-5 w-5" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><circle cx="12" cy="8" r="4" /><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6" /></svg>;
+export const BagIcon = ({ className = "h-5 w-5" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><path d="M5 8h14l-1 13H6L5 8Z" /><path d="M9 8V6a3 3 0 0 1 6 0v2" /></svg>;
+export const MenuIcon = ({ className = "h-6 w-6" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><path d="M4 7h16M4 12h16M4 17h10" /></svg>;
+export const CloseIcon = ({ className = "h-5 w-5" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><path d="M6 6l12 12M18 6 6 18" /></svg>;
+export const PlusIcon = ({ className = "h-4 w-4" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><path d="M12 5v14M5 12h14" /></svg>;
+export const MinusIcon = ({ className = "h-4 w-4" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><path d="M5 12h14" /></svg>;
+export const TrashIcon = ({ className = "h-4 w-4" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13" /></svg>;
+export const CheckIcon = ({ className = "h-4 w-4" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><path d="m5 12.5 4.5 4.5L19 7" /></svg>;
+export const ArrowIcon = ({ className = "h-4 w-4" }: P) => <svg viewBox="0 0 24 24" className={className} {...base}><path d="M5 12h14M13 6l6 6-6 6" /></svg>;

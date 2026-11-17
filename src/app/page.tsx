@@ -1,69 +1,100 @@
-import Image from "next/image";
+import Link from "next/link";
+import Hero from "@/components/Hero";
+import Ticker from "@/components/Ticker";
+import Tilt from "@/components/Tilt";
+import ProductCard from "@/components/ProductCard";
+import ReviewMarquee from "@/components/ReviewMarquee";
+import Newsletter from "@/components/Newsletter";
+import Magnetic from "@/components/Magnetic";
+import { Reveal, RevealGroup, ScrubZoom } from "@/components/Reveal";
+import { getCategories, getProducts, getRatings, getReviews } from "@/lib/queries";
 
-export default function Home() {
+export default async function Home() {
+  const [featured, categories, reviews, ratings, sale] = await Promise.all([
+    getProducts({ featured: true, limit: 8 }), getCategories(), getReviews(undefined, 16), getRatings(), getProducts({ sale: true, limit: 4 }),
+  ]);
+  const all = Object.values(ratings);
+  const count = all.reduce((n, r) => n + r.count, 0);
+  const avg = count ? all.reduce((n, r) => n + r.avg * r.count, 0) / count : 0;
+
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
+    <>
+      <Hero rating={count ? { avg, count } : undefined} />
+
+      {/* Horizontal ticker-tape sentence */}
+      <Ticker />
+
+      <section className="mx-auto max-w-7xl px-5 pt-24">
+        <Reveal><h2 className="font-display text-5xl font-extrabold md:text-6xl">Pick your poison.</h2></Reveal>
+        <RevealGroup className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {categories.map((c, i) => (
+            <Tilt key={c.id} max={12} className="h-full">
+              <Link href={`/products?category=${c.slug}`} className="group card relative flex h-full min-h-56 flex-col justify-end overflow-hidden p-6 transition-shadow hover:shadow-[6px_6px_0_var(--ink)]" style={{ background: c.color }}>
+                <span className="font-display absolute right-4 top-2 text-8xl font-extrabold text-white/30 transition-transform duration-500 group-hover:-translate-y-1 group-hover:scale-110">0{i + 1}</span>
+                <h3 className="font-display text-3xl font-extrabold leading-none text-white">{c.name}</h3>
+                <p className="mt-2 text-sm font-medium text-white/85">{c.description}</p>
+                <span className="mt-4 text-sm font-bold text-white transition-transform group-hover:translate-x-1">Shop now →</span>
+              </Link>
+            </Tilt>
+          ))}
+        </RevealGroup>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 pt-24">
+        <Reveal className="flex items-end justify-between gap-4">
+          <h2 className="font-display text-5xl font-extrabold md:text-6xl">Crowd favourites</h2>
+          <Link href="/products?sort=rating" className="nav-link hidden font-bold sm:block">View all →</Link>
+        </Reveal>
+        <RevealGroup className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+          {featured.map((p) => <ProductCard key={p.id} p={p} />)}
+        </RevealGroup>
+      </section>
+
+      {reviews.length > 0 && (
+        <section className="pt-24">
+          <Reveal className="mx-auto max-w-7xl px-5">
+            <h2 className="font-display text-5xl font-extrabold md:text-6xl">People can&apos;t stop sipping.</h2>
+          </Reveal>
+          <div className="mt-8"><ReviewMarquee reviews={reviews} /></div>
+        </section>
+      )}
+
+      {sale.length > 0 && (
+        <section className="mx-auto max-w-7xl px-5 pt-24">
+          <Reveal className="flex items-end justify-between gap-4">
+            <h2 className="font-display text-5xl font-extrabold md:text-6xl"><span className="text-fizz">On sale</span> right now</h2>
+            <Link href="/products?sale=1" className="nav-link hidden font-bold sm:block">All deals →</Link>
+          </Reveal>
+          <RevealGroup className="mt-10 grid grid-cols-2 gap-4 lg:grid-cols-4">
+            {sale.map((p) => <ProductCard key={p.id} p={p} />)}
+          </RevealGroup>
+        </section>
+      )}
+
+      <section className="mx-auto max-w-7xl px-5 pt-24">
+        <RevealGroup className="grid gap-4 md:grid-cols-3">
+          {[
+            ["🚚", "Free shipping", "On every order over $50. Flat $5 below that."],
+            ["🧊", "Always fresh", "Packed cold and shipped fast, so it arrives fizzing."],
+            ["💛", "Love it or swap it", "30-day happiness guarantee on everything."],
+          ].map(([e, t, d]) => (
+            <div key={t} className="card p-7">
+              <div className="text-4xl">{e}</div>
+              <h3 className="font-display mt-4 text-2xl font-extrabold">{t}</h3>
+              <p className="mt-1 opacity-70">{d}</p>
+            </div>
+          ))}
+        </RevealGroup>
+      </section>
+
+      <section className="mx-auto max-w-7xl px-5 pt-24"><Reveal><Newsletter /></Reveal></section>
+
+      <section className="mx-auto max-w-7xl px-5 pt-16">
+        <ScrubZoom className="card relative overflow-hidden bg-fizz p-10 text-center text-white md:p-20">
+          <h2 className="font-display text-5xl font-extrabold leading-[.95] md:text-7xl">Bring everyone<br />Together.</h2>
+          <Magnetic><Link href="/products?category=gifts" className="btn mt-8 bg-cream text-ink">Build a gift box →</Link></Magnetic>
+        </ScrubZoom>
+      </section>
+    </>
   );
 }
