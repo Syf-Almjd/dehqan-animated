@@ -84,7 +84,7 @@ export default function HeaderClient({ user }: { user: User }) {
               {mounted && wish > 0 && <span className="absolute -right-0.5 -top-0.5 grid h-5 min-w-5 place-items-center rounded-full bg-leaf px-1 text-[10px] font-bold text-white">{wish}</span>}
             </Link>
             {user?.isAdmin && <Link href="/admin" className="hidden rounded-full border border-ink/15 px-3 py-1.5 hover:bg-gold xl:block">Admin</Link>}
-            <Link href={user ? "/account" : "/login"} className={`${iconBtn} hidden sm:grid`} aria-label={user ? "Account" : "Sign in"}><UserIcon /></Link>
+            {/* <Link href={user ? "/account" : "/login"} className={`${iconBtn} hidden sm:grid`} aria-label={user ? "Account" : "Sign in"}><UserIcon /></Link> */}
             <button id="cart-button" onClick={() => set({ cartOpen: true })} className="btn btn-dark ml-1 !px-4 !py-2 !text-sm" aria-label={`Open cart, ${mounted ? count : 0} items`}>
               <BagIcon className="h-4 w-4" />
               <span ref={badge} className="grid h-6 min-w-6 place-items-center rounded-full bg-gold px-1 text-xs font-bold text-forest">{mounted ? count : 0}</span>
