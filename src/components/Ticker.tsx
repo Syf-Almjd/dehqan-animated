@@ -33,17 +33,18 @@ type Item =
   | { g: keyof typeof glyphs; gap?: number }
   | { img: string; alt: string; gap?: number };
 
-// One long sentence, read like a ticker tape. Round harvest photos sit inline like punctuation.
+// Concise ticker — a few signature products, clean and punchy.
 const SENTENCE: Item[] = [
-  { w: "From" }, { w: "the", gap: 0.28 }, { w: "farmer’s", gap: 0.28 }, { w: "hand", gap: 0.28 }, { g: "hand", gap: 0.35 },
-  { w: "the", gap: 0.4 }, { w: "world-famous", gap: 0.28 }, { w: "raisins", gap: 0.28 }, { img: "/products/green-raisins.jpg", alt: "Green raisins", gap: 0.3 },
-  { w: "of", gap: 0.3 }, { w: "Kandahar,", hl: "#c99a2e", gap: 0.3 }, { g: "sun", gap: 0.4 },
-  { w: "the", gap: 0.45 }, { w: "red gold", hl: "#b3261e", gap: 0.28 }, { g: "crocus", gap: 0.3 }, { img: "/products/saffron-front.jpg", alt: "Herati saffron", gap: 0.25 },
-  { w: "of", gap: 0.35 }, { w: "Herat", gap: 0.28 }, { g: "long", gap: 0.4 },
-  { w: "and", gap: 0.4 }, { w: "wild", gap: 0.28 }, { w: "honey", gap: 0.28 }, { g: "drop", gap: 0.3 }, { img: "/products/honey-amber.jpg", alt: "Mountain honey", gap: 0.25 },
-  { w: "of", gap: 0.35 }, { w: "Badakhshan", hl: "#1f5a3c", gap: 0.28 }, { g: "mountain", gap: 0.4 },
-  { w: "travel", gap: 0.45 }, { w: "straight", gap: 0.28 }, { g: "arrow", gap: 0.35 },
-  { w: "to", gap: 0.35 }, { w: "your", gap: 0.28 }, { w: "table", gap: 0.28 }, { g: "heart", gap: 0.4 }, { g: "wheat", gap: 0.3 },
+  { w: "Raisins" }, { g: "diamond", gap: 0.45 },
+  { img: "/products/green-raisins.jpg", alt: "Green raisins", gap: 0.45 },
+  { w: "Saffron", hl: "#b3261e", gap: 0.5 }, { g: "crocus", gap: 0.35 },
+  { img: "/products/saffron-front.jpg", alt: "Herati saffron", gap: 0.35 },
+  { w: "Honey", gap: 0.5 }, { g: "drop", gap: 0.35 },
+  { img: "/products/honey-amber.jpg", alt: "Mountain honey", gap: 0.35 },
+  { w: "Nuts", hl: "#c99a2e", gap: 0.5 }, { g: "sun", gap: 0.4 },
+  { w: "Dried Fruits", gap: 0.5 }, { g: "wheat", gap: 0.4 },
+  { w: "— straight", gap: 0.5 }, { g: "arrow", gap: 0.4 },
+  { w: "to your table", gap: 0.35 }, { g: "heart", gap: 0.4 },
 ];
 
 // Deterministic "random" bubbles for the parallax depth layers
@@ -168,7 +169,7 @@ export default function Ticker() {
       <div
         ref={track}
         className="font-display relative z-10 flex h-full w-max items-center whitespace-nowrap pl-[12vw] pr-[30vw] font-bold leading-none will-change-transform"
-        style={{ fontSize: "clamp(4.5rem, 21vh, 15rem)", transformStyle: "preserve-3d" }}
+        style={{ fontSize: "clamp(3.2rem, 15vw, 15rem)", transformStyle: "preserve-3d" }}
       >
         {SENTENCE.map((it, i) => {
           const style = { marginLeft: `${it.gap ?? 0}em` };

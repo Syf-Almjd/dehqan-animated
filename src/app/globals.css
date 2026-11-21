@@ -102,3 +102,21 @@ details[open] .chev { transform: rotate(45deg); }
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
   background: radial-gradient(1200px 500px at 15% 0%, rgba(201,154,46,.18), transparent 60%), radial-gradient(900px 500px at 100% 100%, rgba(63,154,98,.18), transparent 60%);
 }
+
+/* ── Mobile-first global improvements ── */
+
+/* Touch targets: buttons and links at least 44px tall on mobile */
+@media (max-width: 640px) {
+  .btn { padding: .8rem 1.3rem; font-size: .9rem; }
+  .input { font-size: 1rem; } /* Prevents iOS zoom on focus */
+  h1.font-display { word-break: break-word; }
+}
+
+/* Prevent horizontal overflow */
+html, body { overflow-x: hidden; }
+
+/* Smooth scrolling */
+html { scroll-behavior: smooth; }
+
+/* Better tap highlight on mobile */
+* { -webkit-tap-highlight-color: rgba(201, 154, 46, 0.15); }

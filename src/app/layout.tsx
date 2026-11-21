@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description: "Kandahar raisins, sun-dried fruits, nuts, Herati saffron, Badakhshan mountain honey and Shilajit – sourced directly from Afghan farmers. " + BRAND.intro,
   openGraph: { siteName: BRAND.name, type: "website", images: ["/products/cover-raisins.jpg"] },
 };
-export const viewport: Viewport = { themeColor: "#123321" };
+export const viewport: Viewport = { themeColor: "#123321", width: "device-width", initialScale: 1, maximumScale: 5 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

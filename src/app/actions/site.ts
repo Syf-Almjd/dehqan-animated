@@ -3,6 +3,7 @@ import { revalidatePath } from "next/cache";
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { getCurrentUser } from "@/lib/queries";
+import { sendInquiryNotification } from "@/lib/email";
 
 export type ActionState = { ok?: boolean; error?: string; message?: string } | undefined;
 
@@ -54,9 +55,22 @@ export async function sendInquiry(_: ActionState, fd: FormData): Promise<ActionS
     country: g("country") || null, products: g("products") || null, quantity: g("quantity") || null, message: g("message") || null };
   if (!row.name) return { error: "Please tell us your name." };
   if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(row.email)) return { error: "That email doesn't look right." };
-  if (!isSupabaseConfigured) return { error: "Online enquiries need Supabase connected – please email or WhatsApp us for now." };
-  const supabase = await createClient();
-  const { error } = await supabase.from("inquiries").insert(row);
-  if (error) return { error: "Couldn't send your enquiry – please email or WhatsApp us instead." };
+
+  // Persist to Supabase if available
+  if (isSupabaseConfigured) {
+    const supabase = await createClient();
+    const { error } = await supabase.from("inquiries").insert(row);
+    if (error) console.error("[supabase] inquiry insert failed:", error.message);
+  }
+
+  // Always send email notification via Brevo SMTP
+  try {
+    await sendInquiryNotification(row);
+  } catch (err) {
+    console.error("[email] inquiry notification failed:", err);
+    // Still succeed if Supabase stored it; if not, surface the error
+    if (!isSupabaseConfigured) return { error: "Couldn't send your enquiry – please email or WhatsApp us instead." };
+  }
+
   return { ok: true, message: "Thank you! We'll reply with samples and a quote shortly." };
 }

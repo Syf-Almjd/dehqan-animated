@@ -18,8 +18,8 @@ export default function Footer() {
           </div>
         </div>
       </div>
-      <div className="mx-auto grid max-w-7xl gap-10 px-5 py-14 md:grid-cols-[1.4fr_1fr_1fr_1fr]">
-        <div>
+      <div className="mx-auto grid max-w-7xl gap-8 px-5 py-12 grid-cols-2 md:grid-cols-[1.4fr_1fr_1fr_1fr] lg:gap-10 lg:py-14">
+        <div className="col-span-2 md:col-span-1">
           <Logo light />
           <p className="mt-5 max-w-xs text-sm leading-relaxed text-cream/70">{BRAND.intro}</p>
           <a href={BRAND.catalogue} download className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-gold hover:underline">↓ Download the 2026 export catalogue (PDF)</a>
@@ -42,7 +42,31 @@ export default function Footer() {
           <p className="pt-2 text-cream/50">Sourced from Kandahar, Herat, Badakhshan & Takhar, Afghanistan.</p>
         </div>
       </div>
-      <p className="border-t border-cream/10 py-5 text-center text-xs text-cream/50">© {new Date().getFullYear()} {BRAND.company} · <span className="font-ar" lang="ar">{BRAND.company_ar}</span></p>
+      {/* Al-Aqsa Technology credit */}
+      <div className="border-t border-cream/10 px-5 py-6 text-center">
+        <p className="text-xs text-cream/50">© {new Date().getFullYear()} {BRAND.company} · <span className="font-ar" lang="ar">{BRAND.company_ar}</span></p>
+        <p className="mt-2 text-xs text-cream/35">
+          Designed &amp; developed by{" "}
+          <a
+            href="https://alaqsa.tech"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-bold text-gold/70 transition-colors hover:text-gold"
+          >
+            Al-Aqsa Technology
+          </a>
+          {" "}·{" "}
+          <a
+            href="https://alaqsa.tech"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-colors hover:text-cream/60"
+          >
+            alaqsa.tech
+          </a>
+          {" "}© 2026
+        </p>
+      </div>
     </footer>
   );
 }

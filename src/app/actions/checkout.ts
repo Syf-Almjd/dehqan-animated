@@ -2,6 +2,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/env";
 import { demoCoupons } from "@/lib/data";
+import { sendOrderNotification } from "@/lib/email";
 
 export type CheckoutInput = {
   items: { id: string; qty: number }[];
@@ -25,16 +26,30 @@ export async function checkCoupon(code: string, subtotal: number): Promise<{ dis
 }
 
 export async function placeOrder(input: CheckoutInput): Promise<{ orderId?: string; error?: string }> {
-  if (!isSupabaseConfigured) return { error: "Checkout needs Supabase – add your keys to .env.local (see README)." };
   const s = input.shipping;
   if (![s.name, s.address, s.city, s.zip, s.country].every((v) => v?.trim())) return { error: "Please fill in all shipping fields." };
   if (!input.items.length) return { error: "Your cart is empty." };
-  const supabase = await createClient();
-  const { data, error } = await supabase.rpc("place_order", {
-    p_items: input.items.map((i) => ({ product_id: i.id, qty: i.qty })),
-    p_shipping: s,
-    p_coupon: input.coupon ?? null,
-  });
-  if (error) return { error: error.message };
-  return { orderId: data as string };
+
+  let orderId: string;
+
+  if (isSupabaseConfigured) {
+    const supabase = await createClient();
+    const { data, error } = await supabase.rpc("place_order", {
+      p_items: input.items.map((i) => ({ product_id: i.id, qty: i.qty })),
+      p_shipping: s,
+      p_coupon: input.coupon ?? null,
+    });
+    if (error) return { error: error.message };
+    orderId = data as string;
+  } else {
+    // No Supabase – generate a simple order ID and rely on email notification only
+    orderId = `ORD-${Date.now()}`;
+  }
+
+  // Fire-and-forget email notification via Brevo SMTP
+  sendOrderNotification({ orderId, items: input.items, shipping: s, coupon: input.coupon }).catch((err) =>
+    console.error("[email] order notification failed:", err)
+  );
+
+  return { orderId };
 }
