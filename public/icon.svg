@@ -1,0 +1,50 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="sealBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#184630" />
+      <stop offset="50%" stop-color="#123321" />
+      <stop offset="100%" stop-color="#0a1d13" />
+    </linearGradient>
+    <linearGradient id="sealGold" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#fae287" />
+      <stop offset="45%" stop-color="#e5b43b" />
+      <stop offset="100%" stop-color="#b8831b" />
+    </linearGradient>
+  </defs>
+
+  <!-- Circular Forest Green Seal with Gold Border -->
+  <circle cx="32" cy="32" r="30.5" fill="url(#sealBg)" stroke="url(#sealGold)" stroke-width="2.5" />
+  <circle cx="32" cy="32" r="25.5" fill="none" stroke="#d4a331" stroke-width="0.9" stroke-dasharray="2.5 1.8" opacity="0.8" />
+
+  <!-- Center Wheat Sheaf -->
+  <g fill="url(#sealGold)" stroke="url(#sealGold)" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Center Stem -->
+    <path d="M32 49V17" stroke-width="2.6" fill="none" />
+
+    <!-- Top Grain -->
+    <path d="M32 10.5 C29.5 14 29.5 17.5 32 19 C34.5 17.5 34.5 14 32 10.5 Z" stroke-width="0.6" />
+    <path d="M32 10.5 L32 6.5" stroke-width="1.3" fill="none" />
+
+    <!-- Pair 1 -->
+    <path d="M32 19 C26.5 16.5 23.5 13 23.5 9 C29.5 10.5 31.5 14 32 19 Z" stroke-width="0.6" />
+    <path d="M23.5 9 L19.5 4.5" stroke-width="1.3" fill="none" />
+    <path d="M32 19 C37.5 16.5 40.5 13 40.5 9 C34.5 10.5 32.5 14 32 19 Z" stroke-width="0.6" />
+    <path d="M40.5 9 L44.5 4.5" stroke-width="1.3" fill="none" />
+
+    <!-- Pair 2 -->
+    <path d="M32 27 C25.5 24 22 19.5 22 15 C28.5 16.5 31 20.5 32 27 Z" stroke-width="0.6" />
+    <path d="M22 15 L17.5 10.5" stroke-width="1.3" fill="none" />
+    <path d="M32 27 C38.5 24 42 19.5 42 15 C35.5 16.5 33 20.5 32 27 Z" stroke-width="0.6" />
+    <path d="M42 15 L46.5 10.5" stroke-width="1.3" fill="none" />
+
+    <!-- Pair 3 -->
+    <path d="M32 35 C25.5 32 22.5 27 22.5 22 C28.5 23.5 31 28 32 35 Z" stroke-width="0.6" />
+    <path d="M22.5 22 L18.5 18" stroke-width="1.3" fill="none" />
+    <path d="M32 35 C38.5 32 41.5 27 41.5 22 C35.5 23.5 33 28 32 35 Z" stroke-width="0.6" />
+    <path d="M41.5 22 L45.5 18" stroke-width="1.3" fill="none" />
+
+    <!-- Pair 4 (Base) -->
+    <path d="M32 43 C27 40.5 25 36 25 31.5 C29.5 32.5 31.5 36.5 32 43 Z" stroke-width="0.6" />
+    <path d="M32 43 C37 40.5 39 36 39 31.5 C34.5 32.5 32.5 36.5 32 43 Z" stroke-width="0.6" />
+  </g>
+</svg>

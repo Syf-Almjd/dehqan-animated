@@ -19,6 +19,15 @@ export const metadata: Metadata = {
   title: { default: `${BRAND.name} — Afghan raisins, dried fruits, nuts, saffron & honey`, template: `%s · ${BRAND.name}` },
   description: "Kandahar raisins, sun-dried fruits, nuts, Herati saffron, Badakhshan mountain honey and Shilajit – sourced directly from Afghan farmers. " + BRAND.intro,
   openGraph: { siteName: BRAND.name, type: "website", images: ["/products/cover-raisins.jpg"] },
+  icons: {
+    icon: [
+      { url: "/icon.svg", type: "image/svg+xml" },
+      { url: "/favicon.ico", sizes: "32x32" },
+    ],
+    apple: [
+      { url: "/apple-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+  },
 };
 export const viewport: Viewport = { themeColor: "#123321", width: "device-width", initialScale: 1, maximumScale: 5 };
 
